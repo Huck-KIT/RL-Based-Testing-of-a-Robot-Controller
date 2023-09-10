@@ -5,11 +5,9 @@ This repository accompanies our research paper "Benefits and Challenges of Reinf
 
 _Example of a human-robot collision during testing_
 
--In the folder "Experiments" you can find the code and simulation models required to recreate our experiments.
-
--In the folder "Results", the results of our experiments are presented in the form of plots and diagrams (we do not provide an in-depth explanation of the diagrams, please refer to the paper for this).
-
--In the folder "Videos", you can find some exemplary videos from the simulation.
+- In the folder "Experiments" you can find the code and simulation models required to recreate our experiments.
+- In the folder "Results", the results of our experiments are presented in the form of plots and diagrams (we do not provide an in-depth explanation of the diagrams, please refer to the paper for this).
+- In the folder "Videos", you can find some exemplary videos from the simulation.
 
 
 
