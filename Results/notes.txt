@@ -1,2 +1,4 @@
-This folder contains:
-- TBD
+This folder contains plots that illustrate the results of our experiments.
+- In the subfolder "total_collisions", you find bar plots indicating the total number of collisions for each search algorithm and configuration. The suffix (_1m, _2m, none) indicates the setting of the AGV with respect to the laser scanner zone. The results are averaged over all test runs of that particular configuration. These results are referenced in discussing "Lesson one" of the paper.
+- In the subfolder "collision_classes", you find bar plots indicating the number of identified collision classes for each configuration and algorithm. Again, the suffix indicates the laser scanner setting. These results are referenced in discussing "Lesson two" of the paper.
+
