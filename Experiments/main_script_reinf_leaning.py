@@ -37,7 +37,7 @@ SPAWN = True             # open a CoppeliaSim isntance, no need to manually star
 PATH_TO_COPPELIASIM = '' # path to the CoppeliaSim home directory, e.g. '/home/your_name/CoppeliaSim/' 
 PATH_TO_SCENEFOLDER = '' # path to the folder containing the scene-files, e.g. '/home/your_name/multiagent-falsification/scenes/'
 
-MAX_STEPS_PER_EPISODE = 15 # the amount of steps the rl algorithm can do per episode, beware, the workers performs multiple steps per rl step
+MAX_STEPS_PER_EPISODE = 15 # the amount of steps the rl algorithm can do per episode, beware, the worker performs multiple steps per rl step
 WORKER_SUB_STEPS = 10   # sets how many steps the worker can perform before he gets new values from the rl-algorithm
 CRITICAL_DISTANCE = 0.3 # episode is saved in report when distance between worker and AGV falls below critical distance
 MAX_AGV_RETARDATION = -7.5 # the AGV's max retardation 
