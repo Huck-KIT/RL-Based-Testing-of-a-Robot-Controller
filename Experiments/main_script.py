@@ -31,17 +31,17 @@ ACCUMULATE_REWARDS = False  # if True, the reward is accumulated over the episod
 REPORT_NAME = "report" + str(REPORT_NUM) + "_accumulation_"+str(ACCUMULATE_REWARDS)+".csv"
 CURRENT_REPORT_NAME = "current_" + REPORT_NAME
 CONFIG_FN = 'mpc_default.yaml'
-BUILD_MPC = False
-RENDER = True
-SPAWN = True
-PATH_TO_COPPELIASIM = '/home/kaiser_uyjg/CoppeliaSim/' #'C:/Program Files/CoppeliaRobotics/CoppeliaSimEdu/'
-PATH_TO_SCENEFOLDER = '/home/kaiser_uyjg/multiagent-falsification/Scenario_Tom/MRK/'
+BUILD_MPC = False       # only necessary when changing the controller's parameters itself, but not when chaning the ones in this file
+RENDER = True           # show animations in CoppeliaSim
+SPAWN = True            # open a CoppeliaSim isntance, no need to manually start CoppeliaSim
+PATH_TO_COPPELIASIM =   # path to the CoppeliaSim home directory, e.g. '/home/your_name/CoppeliaSim/' 
+PATH_TO_SCENEFOLDER =   # path to the folder containing the scene-files, e.g. '/home/your_name/multiagent-falsification/scenes/'
 
-MAX_STEPS_PER_EPISODE = 15
-WORKER_SUB_STEPS = 10  # sets how many steps the worker can perform before he gets new values from the rl-algorithm
-CRITICAL_DISTANCE = 0.3  # sets when to log an episode
-MAX_AGV_RETARDATION = -7.5
-WORKER_MAX_VELO = 1.5
+MAX_STEPS_PER_EPISODE = 15 # the amount of steps the rl algorithm can do per episode, beware, the workers performs multiple steps per rl step
+WORKER_SUB_STEPS = 10   # sets how many steps the worker can perform before he gets new values from the rl-algorithm
+CRITICAL_DISTANCE = 0.3 # episode is saved in report when distance between worker and AGV falls below critical distance
+MAX_AGV_RETARDATION = -7.5 # the AGV's max retardation 
+WORKER_MAX_VELO = 1.5   # the worker's max velocity
 
 
 class CoppeliaSim(gym.Env):
@@ -428,7 +428,6 @@ class AGVDT(object):
 
     # returns if the episode is done
     def policy(self, t, waypoints, dynObs):
-        # print(self.idx)
         if self.idx >= len(self.ref_traj) - 1:
             # waypoint reached
             if waypoints[self.nextWP][3] and t < self.start_time_pause + 1:
@@ -542,67 +541,6 @@ class WorkerDS(object):
                     dynObs[self.config.ndynobs * i + 4] = self.state[2]  # 0 #worker's heading
                     dynObs[self.config.ndynobs * i + 5] = 1
         return dynObs
-
-    def predict_path_old(self):
-        # number_of_dyn_obs*variables_per_dyn_ob*prediction_horizon (15*6*20)
-        dynObs = [0.0] * self.config.Ndynobs * self.config.ndynobs * self.config.N_hor
-        if self.is_visible:
-            # worker is visible, handle him as dynamic object
-            dx = self.state[0] - self.last_state[0]
-            dy = self.state[1] - self.last_state[1]
-            prev_dx = self.last_state[0] - self.prev_last_state[0]
-            prev_dy = self.last_state[1] - self.prev_last_state[1]
-            ddx = dx - prev_dx
-            ddy = dy - prev_dy
-
-            for i in range(self.config.N_hor):
-                if i == 0:
-                    if dx >= 0:
-                        print("CASE 1a")
-                        print("Position increment: "+str(min(1.5*self.config.ts, self.state[0]-self.last_state[0])))
-                        x_i = self.state[0] + min(1.5*self.config.ts, self.state[0]-self.last_state[0])   # i * dx + i ** 2 * ddx  # worker's x-pos
-                    else:
-                        print("CASE 2a")
-                        print("Position increment: " + str(max(-1.5 * self.config.ts, self.state[0] - self.last_state[0])))
-                        x_i = self.state[0] + max(-1.5 * self.config.ts, self.state[0] - self.last_state[0])
-                    if dy >= 0:
-                        y_i = self.state[1] + min(1.5*self.config.ts, self.state[1]-self.last_state[1])   # i * dy + i ** 2 * ddy  # worker's y-pos
-                    else:
-                        y_i = self.state[1] + max(-1.5 * self.config.ts, self.state[1] - self.last_state[1])
-
-                else:
-                    if dx >= 0:
-                        print("CASE 1b")
-                        print("Position increment: "+str(min(1.5*self.config.ts, (1+i)*self.state[0]-(1+2*i)*self.last_state[0]+i*self.prev_last_state[0])))
-                        x_i = dynObs[self.config.ndynobs * (i-1)] + min(1.5*self.config.ts, (1+i)*self.state[0]-(1+2*i)*self.last_state[0]+i*self.prev_last_state[0])
-                    else:
-                        print("CASE 2b")
-                        print("Position increment: " +str(max(-1.5 * self.config.ts,
-                                                                          (1 + i) * self.state[0] - (1 + 2 * i) *
-                                                                          self.last_state[0] + i * self.prev_last_state[
-                                                                              0])))
-                        x_i = dynObs[self.config.ndynobs * (i - 1)] + max(-1.5 * self.config.ts,
-                                                                          (1 + i) * self.state[0] - (1 + 2 * i) *
-                                                                          self.last_state[0] + i * self.prev_last_state[
-                                                                              0])
-                    if dy >= 0:
-                        y_i = dynObs[self.config.ndynobs * (i - 1)+1] + min(1.5 * self.config.ts, (1 + i) * self.state[1] - (1 + 2 * i) * self.last_state[1] + i * self.prev_last_state[1])
-                    else:
-                        y_i = dynObs[self.config.ndynobs * (i - 1) + 1] + max(-1.5 * self.config.ts,
-                                                                          (1 + i) * self.state[1] - (1 + 2 * i) *
-                                                                          self.last_state[1] + i * self.prev_last_state[
-                                                                              1])
-                dynObs[self.config.ndynobs * i] = x_i  # worker's x-pos
-                dynObs[self.config.ndynobs * i + 1] = y_i  # worker's y-pos
-                dynObs[self.config.ndynobs * i + 2] = 1.0
-                dynObs[self.config.ndynobs * i + 3] = 1.0
-                dynObs[self.config.ndynobs * i + 4] = self.state[2]  # 0 #worker's heading
-                dynObs[self.config.ndynobs * i + 5] = 1
-
-        print(dynObs)
-
-        return dynObs
-
 
 if __name__ == "__main__":
 
