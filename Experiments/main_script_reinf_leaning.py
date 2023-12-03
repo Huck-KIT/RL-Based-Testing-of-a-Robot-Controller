@@ -542,6 +542,7 @@ class WorkerDS(object):
                     dynObs[self.config.ndynobs * i + 5] = 1
         return dynObs
 
+
 if __name__ == "__main__":
 
     start = time.time()
