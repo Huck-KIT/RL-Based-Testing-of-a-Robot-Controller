@@ -31,11 +31,11 @@ ACCUMULATE_REWARDS = False  # if True, the reward is accumulated over the episod
 REPORT_NAME = "report" + str(REPORT_NUM) + "_accumulation_"+str(ACCUMULATE_REWARDS)+".csv"
 CURRENT_REPORT_NAME = "current_" + REPORT_NAME
 CONFIG_FN = 'mpc_default.yaml'
-BUILD_MPC = False       # only necessary when changing the controller's parameters itself, but not when changing the ones in this file
-RENDER = True           # show animations in CoppeliaSim
-SPAWN = True            # open a CoppeliaSim isntance, no need to manually start CoppeliaSim
-PATH_TO_COPPELIASIM =   # path to the CoppeliaSim home directory, e.g. '/home/your_name/CoppeliaSim/' 
-PATH_TO_SCENEFOLDER =   # path to the folder containing the scene-files, e.g. '/home/your_name/multiagent-falsification/scenes/'
+BUILD_MPC = False        # only necessary when changing the controller's parameters itself, but not when changing the ones in this file
+RENDER = True            # show animations in CoppeliaSim
+SPAWN = True             # open a CoppeliaSim isntance, no need to manually start CoppeliaSim
+PATH_TO_COPPELIASIM = '' # path to the CoppeliaSim home directory, e.g. '/home/your_name/CoppeliaSim/' 
+PATH_TO_SCENEFOLDER = '' # path to the folder containing the scene-files, e.g. '/home/your_name/multiagent-falsification/scenes/'
 
 MAX_STEPS_PER_EPISODE = 15 # the amount of steps the rl algorithm can do per episode, beware, the workers performs multiple steps per rl step
 WORKER_SUB_STEPS = 10   # sets how many steps the worker can perform before he gets new values from the rl-algorithm
