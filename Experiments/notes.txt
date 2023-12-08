@@ -7,4 +7,9 @@ How to recreate the experiments:
  a) Clone the repositroy and modify the requirements.txt file as follows:
   - change casidi version to 3.5.6rc2
   - torch and torchvision are optional and may be removed from the requirements.txt if you don't want to install them.
- b) Install requirements.txt
+ b) Install requirements.txt with the following command: pip install -r requirements.txt
+ c) Follow the remaining installation instructions given in the repository.
+4. Move the python scripts main_script_random_sampling.py and main_script_reinforcement_learning.py from our Experiments folder to the src folder of the controller repository.
+
+### CONFIGURATION OF EXPERIMENTS ###
+5. Edit the pyhton script main_script_random_sampling.py or main_script_reinforcement_learning.py (depending on which Experiments you want to run). See the paragraph in the code denoted by "PLEASE EDIT" and the corresponding comments for further explanation.
