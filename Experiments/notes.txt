@@ -12,4 +12,6 @@ How to recreate the experiments:
 4. Move the python scripts main_script_random_sampling.py and main_script_reinforcement_learning.py from our Experiments folder to the src folder of the controller repository.
 
 ### CONFIGURATION OF EXPERIMENTS ###
-5. Edit the pyhton script main_script_random_sampling.py or main_script_reinforcement_learning.py (depending on which Experiments you want to run). See the paragraph in the code denoted by "PLEASE EDIT" and the corresponding comments for further explanation.
+5. Edit the pyhton script main_script_random_sampling.py or main_script_reinforcement_learning.py (depending on which Experiments you want to run). See the paragraph in the code denoted by "PLEASE EDIT" and the corresponding comments for further explanation. Also, don't forget to set the PATH_TO_SCENEFOLDER to the location of the .ttt files (that is, to the "Simulation Models" folder from our repository.)
+6. Execute the python script. If you have configured the remote API correctly (see step 1), this should automatically open CoppeliaSim and start the simulation.
+7. The results will be saved in a file 'reports.csv' in your current working directory.
