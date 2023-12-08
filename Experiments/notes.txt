@@ -1,2 +1,10 @@
 How to recreate the experiments:
- TBD
+
+### PREREQUISITES ###
+1. Install CoppeliaSim version 4.4.0 (https://www.coppeliarobotics.com/downloads) and enable the ZeroMQ remote API according to the following instructions: https://www.coppeliarobotics.com/helpFiles/en/zmqRemoteApiOverview.htm
+2. Install rustup (https://rustup.rs/)
+3. Install the MPC controller from the following repository: https://github.com/Woodenonez/DyObAv_MPCnWTA_Warehouse
+ a) Clone the repositroy and modify the requirements.txt file as follows:
+  - change casidi version to 3.5.6rc2
+  - torch and torchvision are optional and may be removed from the requirements.txt if you don't want to install them.
+ b) Install requirements.txt
