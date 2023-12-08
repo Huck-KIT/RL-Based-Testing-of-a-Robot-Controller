@@ -1,2 +1,8 @@
-This folder contains:
-- TBD
+This folder contains some video examples from our simulations. These are explained below:
+
+1. "AGV evades the worker": Here you see a successful collision avoidance behavior of the AGV.
+2. "Collision": Here you see a situation where the worker learned to exploit a safety flaw (specifically, the gap in the laser scanner detection fields) and thereby causes a collision.
+3. "Reward Hacking": These two videos show examples of a reward hacking behavior
+  - Worker blocks AGV near goal: The worker blocks the goal point, causing the AGV to wait, which leads to an extended duration of the episode, giving the worker a longer period of time during which rewards are collected.
+  - Worker slows down AGV: The worker repeatedly causes near-collisions where the AGV performs an emergency stop. This leads to a longer period during which relatively high rewards can be collected, but without causing a full collision that would terminate the episode prematurely.
+4. Running multiple CoppeliaSim instances: This shows the parallel execution of multiple experiments. Parallel execution is possible by starting multiple instances of the simulation scripts. Each instance will open its own CoppeliaSim simulation. Note: For this to work, you need to configure different ports in the simulation scripts (see variable PORT).
